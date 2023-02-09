@@ -1,0 +1,118 @@
+<script>
+	export let name;
+
+	let newYTid = "";
+	let newStart = "";
+	let newEnd = "";
+	let newName = "";
+
+	let playerList = [
+		{ id: "dQw4w9WgXcQ", name: "Song 1", start: 0, end: 10 },
+		{ id: "ddjr5KDqYGA", name: "Song 2", start: 10, end: 15 },
+	];
+
+	function addToList() {
+		let newPlayer = {
+			id: newYTid,
+			name: newName,
+			start: newStart,
+			end: newEnd,
+		};
+		playerList = [...playerList, newPlayer];
+		resetForm();
+	}
+
+	function resetForm() {
+		newYTid = "";
+		newStart = "";
+		newEnd = "";
+		newName = "";
+	}
+
+	function removeFromList(index) {
+		playerList.splice(index, 1);
+		playerList = playerList;
+	}
+</script>
+
+<main>
+	<h1>{name}'s amazing Music Quiz!</h1>
+
+	<!-- Input -->
+	<label>
+		Add a youtube id
+		<input name="ytid" bind:value={newYTid} />
+	</label>
+	<label>
+		Title
+		<input name="name" bind:value={newName} />
+	</label>
+	<label>
+		Start (sec)
+		<input name="start" type="number" bind:value={newStart} />
+	</label>
+	<label>
+		End (sec)
+		<input name="end" type="number" bind:value={newEnd} />
+	</label>
+	<button on:click={addToList}>Add</button>
+
+	<br />
+	<!-- PlayerList -->
+	{#each playerList as item, index}
+		<h2>{item.name}</h2>
+		<div class="window">
+			<div class="player">
+				<iframe
+					width="300"
+					height="300"
+					src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}"
+					title="YouTube video player"
+					frameborder="10"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				/>
+			</div>
+		</div>
+		<span on:click={() => removeFromList(index)}>❌</span>
+		<br />
+	{/each}
+</main>
+
+<style>
+	main {
+		text-align: center;
+		padding: 1em;
+		max-width: 240px;
+		margin: 0 auto;
+	}
+
+	h1 {
+		color: #ff3e00;
+		text-transform: uppercase;
+		font-size: 4em;
+		font-weight: 100;
+	}
+
+	h2 {
+		text-align: left;
+	}
+
+	@media (min-width: 640px) {
+		main {
+			max-width: none;
+		}
+	}
+
+	.window {
+		position: relative;
+		width: 300px;
+		height: 55px;
+		overflow: hidden;
+	}
+
+	.player {
+		position: absolute;
+		top: -255px;
+		left: -5px;
+	}
+</style>
