@@ -66,11 +66,11 @@
 				<div class="player">
 					<iframe
 						width="300"
-						height="300"
-						src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}"
+						height="400"
+						src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}&modestbranding=1&fs=0"
 						title="YouTube video player"
-						frameborder="10"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
 					/>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
 		margin: 0 auto;
 		width: 100%;
 	}
-
+	
 	.window {
 		position: relative;
 		width: 300px;
@@ -122,7 +122,7 @@
 
 	.player {
 		position: absolute;
-		top: -255px;
+		top: -355px;
 		left: -5px;
 	}
 </style>
