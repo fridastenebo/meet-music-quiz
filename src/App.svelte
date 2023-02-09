@@ -61,19 +61,21 @@
 	<!-- PlayerList -->
 	{#each playerList as item, index}
 		<h2>{item.name}</h2>
-		<div class="window">
-			<div class="player">
-				<iframe
-					width="300"
-					height="300"
-					src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}"
-					title="YouTube video player"
-					frameborder="10"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				/>
+		<div class="wrapper">
+			<div class="window">
+				<div class="player">
+					<iframe
+						width="300"
+						height="300"
+						src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}"
+						title="YouTube video player"
+						frameborder="10"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					/>
+				</div>
 			</div>
+			<span on:click={() => removeFromList(index)}>❌</span>
 		</div>
-		<span on:click={() => removeFromList(index)}>❌</span>
 		<br />
 	{/each}
 </main>
@@ -101,6 +103,14 @@
 		main {
 			max-width: none;
 		}
+	}
+
+	.wrapper {
+		display: grid;
+		grid-gap: 0 2rem;
+		grid-template-columns: repeat(12, 1fr);
+		margin: 0 auto;
+		width: 100%;
 	}
 
 	.window {
