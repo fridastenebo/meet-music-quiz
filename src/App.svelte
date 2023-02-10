@@ -18,7 +18,6 @@
 
 	let defaultList = [
 		{ id: "dQw4w9WgXcQ", name: "Song 1", start: 0, end: 10 },
-		{ id: "ddjr5KDqYGA", name: "Song 2", start: 10, end: 15 },
 	];
 	let playerList = state || defaultList;
 
@@ -30,19 +29,27 @@
 			end: newEnd,
 		};
 		playerList = [...playerList, newPlayer];
+		saveState();
 		resetForm();
+	}
+
+	function saveState() {
+		let newState = encodeURI(btoa(JSON.stringify(playerList)));
+		console.log(newState);
+		urlParams.set("state", newState);
+		window.location.href = `${location.pathname}?${urlParams}`;
 	}
 
 	function resetForm() {
 		newYTid = "";
 		newStart = "";
 		newEnd = "";
-		newName = "";
 	}
 
 	function removeFromList(index) {
 		playerList.splice(index, 1);
 		playerList = playerList;
+		saveState();
 	}
 </script>
 
@@ -52,7 +59,7 @@
 	<!-- Input -->
 	<label>
 		Add a youtube id
-		<input name="ytid" bind:value={newYTid} />
+		<input name="ytid" placeholder="dQw4w9WgXcQ" bind:value={newYTid} />
 	</label>
 	<label>
 		Title
@@ -72,21 +79,23 @@
 	<!-- PlayerList -->
 	{#each playerList as item, index}
 		<h2>{item.name}</h2>
-		<div class="wrapper">
-			<div class="window">
-				<div class="player">
-					<iframe
-						width="300"
-						height="400"
-						src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}&modestbranding=1&fs=0"
-						title="YouTube video player"
-						frameborder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
-					/>
+		{#if item.id !== ""}
+			<div class="wrapper">
+				<div class="window">
+					<div class="player">
+						<iframe
+							width="300"
+							height="400"
+							src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}&modestbranding=1&fs=0"
+							title="YouTube video player"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+						/>
+					</div>
 				</div>
+				<span on:click={() => removeFromList(index)}>❌</span>
 			</div>
-			<span on:click={() => removeFromList(index)}>❌</span>
-		</div>
+		{/if}
 		<br />
 	{/each}
 </main>
