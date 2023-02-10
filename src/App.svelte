@@ -1,15 +1,26 @@
 <script>
 	export let name;
 
+	const urlParams = new URLSearchParams(window.location.search);
+	const encodedState = urlParams.get("state");
+	let state;
+	if (encodedState === null) {
+		state = null;
+	} else {
+		state = JSON.parse(atob(decodeURI(encodedState) || "") || null);
+		console.log(state);
+	}
+
 	let newYTid = "";
 	let newStart = "";
 	let newEnd = "";
 	let newName = "";
 
-	let playerList = [
+	let defaultList = [
 		{ id: "dQw4w9WgXcQ", name: "Song 1", start: 0, end: 10 },
 		{ id: "ddjr5KDqYGA", name: "Song 2", start: 10, end: 15 },
 	];
+	let playerList = state || defaultList;
 
 	function addToList() {
 		let newPlayer = {
@@ -112,7 +123,7 @@
 		margin: 0 auto;
 		width: 100%;
 	}
-	
+
 	.window {
 		position: relative;
 		width: 300px;
