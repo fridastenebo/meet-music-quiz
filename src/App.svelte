@@ -54,7 +54,9 @@
 </script>
 
 <main>
-	<h1>{name}'s amazing Music Quiz!</h1>
+	<h1>
+		<i class="bi bi-music-player-fill"></i>
+		{name}'s amazing Music Quiz!</h1>
 
 	<!-- Input -->
 	<label>
@@ -111,7 +113,7 @@
 	h1 {
 		color: #ff3e00;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 3em;
 		font-weight: 100;
 	}
 
@@ -123,6 +125,12 @@
 		main {
 			max-width: none;
 		}
+	}
+
+	input,
+	label {
+		display: flex;
+		flex-direction: column;
 	}
 
 	.wrapper {
