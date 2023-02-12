@@ -15,9 +15,7 @@
 	let newEnd = "";
 	let newName = "";
 
-	let defaultList = [
-		{ id: "dQw4w9WgXcQ", name: "Song 1", start: 0, end: 10 },
-	];
+	let defaultList = [];
 	let playerList = state || defaultList;
 
 	function addToList() {
@@ -66,7 +64,7 @@
 <main>
 	<h1>
 		<i class="bi bi-music-player-fill" />
-		{name}'s amazing Music Quiz!
+		The Amazing Meet Music Quiz!
 	</h1>
 
 	<!-- Input -->
