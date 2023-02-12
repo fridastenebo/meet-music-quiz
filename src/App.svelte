@@ -70,76 +70,90 @@
 	</h1>
 
 	<!-- Input -->
-	<div class="mb-3 row">
-		<label for="ytid" class="col-sm-5 col-form-label">YouTube id</label>
-		<div class="col-sm-4">
-			<input
-				id="ytid"
-				name="ytid"
-				class="form-control"
-				placeholder="dQw4w9WgXcQ"
-				bind:value={newYTid}
-			/>
+	<div class="card">
+		<div class="card-header">Add items</div>
+		<div class="card-body">
+			<div class="mb-3 row">
+				<label for="ytid" class="col-sm-5 col-form-label"
+					>YouTube id</label
+				>
+				<div class="col-sm-4">
+					<input
+						id="ytid"
+						name="ytid"
+						class="form-control"
+						placeholder="dQw4w9WgXcQ"
+						bind:value={newYTid}
+					/>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="name" class="col-sm-5 col-form-label">Title</label>
+				<div class="col-sm-4">
+					<input
+						id="name"
+						name="name"
+						class="form-control"
+						bind:value={newName}
+					/>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="start" class="col-sm-5 col-form-label"
+					>Start sec</label
+				>
+				<div class="col-sm-4">
+					<input
+						id="start"
+						name="start"
+						class="form-control"
+						bind:value={newStart}
+					/>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<label for="end" class="col-sm-5 col-form-label">End sec</label>
+				<div class="col-sm-4">
+					<input
+						id="end"
+						name="end"
+						class="form-control"
+						bind:value={newEnd}
+					/>
+				</div>
+			</div>
+			<div class="col auto">
+				<button
+					id="submit"
+					class="btn btn-primary"
+					on:click={addToList}
+				>
+					<i class="bi bi-plus-circle" />
+					Add</button
+				>
+			</div>
 		</div>
 	</div>
-	<div class="mb-3 row">
-		<label for="name" class="col-sm-5 col-form-label">Title</label>
-		<div class="col-sm-4">
-			<input
-				id="name"
-				name="name"
-				class="form-control"
-				bind:value={newName}
-			/>
-		</div>
-	</div>
-	<div class="mb-3 row">
-		<label for="start" class="col-sm-5 col-form-label">Start sec</label>
-		<div class="col-sm-4">
-			<input
-				id="start"
-				name="start"
-				class="form-control"
-				bind:value={newStart}
-			/>
-		</div>
-	</div>
-	<div class="mb-3 row">
-		<label for="end" class="col-sm-5 col-form-label">End sec</label>
-		<div class="col-sm-4">
-			<input
-				id="end"
-				name="end"
-				class="form-control"
-				bind:value={newEnd}
-			/>
-		</div>
-	</div>
-	<div class="col auto">
-		<button id="submit" class="btn btn-primary" on:click={addToList}>
-			<i class="bi bi-plus-circle" />
-			Add</button
-		>
-	</div>
-
 	<br />
 	<!-- PlayerList -->
-	{#each playerList as item, index}
-		<h2>{item.name}</h2>
-		<div class="wrapper">
-			{#if item.id !== ""}
-			<div class="window">
-					<div class="player">
-						<iframe
-							width="300"
-							height="400"
-							src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}&modestbranding=1&fs=0"
-							title="YouTube video player"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
-						/>
+	{#if playerList.length > 0}
+		{#each playerList as item, index}
+			<h2>{item.name}</h2>
+			<div class="wrapper">
+				{#if item.id !== ""}
+					<div class="window">
+						<div class="player">
+							<iframe
+								width="300"
+								height="400"
+								src="https://www.youtube.com/embed/{item.id}?start={item.start}&end={item.end}"
+								title="YouTube video player"
+								frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+								allowfullscreen
+							/>
+						</div>
 					</div>
-				</div>
 				{/if}
 				<button class="btn btn-danger btn">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -149,8 +163,9 @@
 					/>
 				</button>
 			</div>
-		<br />
-	{/each}
+			<br />
+		{/each}
+	{/if}
 </main>
 
 <style>
