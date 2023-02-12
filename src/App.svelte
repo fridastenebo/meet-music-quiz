@@ -8,7 +8,6 @@
 		state = null;
 	} else {
 		state = JSON.parse(atob(decodeURI(encodedState) || "") || null);
-		console.log(state);
 	}
 
 	let newYTid = "";
@@ -51,39 +50,85 @@
 		playerList = playerList;
 		saveState();
 	}
+
+	$: {
+		let lastInput = document.getElementById("end");
+		if (lastInput) {
+			lastInput.addEventListener("keyup", function (e) {
+				if (e.code === "Enter") {
+					document.getElementById("submit").click();
+				}
+			});
+		}
+	}
 </script>
 
 <main>
 	<h1>
-		<i class="bi bi-music-player-fill"></i>
-		{name}'s amazing Music Quiz!</h1>
+		<i class="bi bi-music-player-fill" />
+		{name}'s amazing Music Quiz!
+	</h1>
 
 	<!-- Input -->
-	<label>
-		Add a youtube id
-		<input name="ytid" placeholder="dQw4w9WgXcQ" bind:value={newYTid} />
-	</label>
-	<label>
-		Title
-		<input name="name" bind:value={newName} />
-	</label>
-	<label>
-		Start (sec)
-		<input name="start" type="number" bind:value={newStart} />
-	</label>
-	<label>
-		End (sec)
-		<input name="end" type="number" bind:value={newEnd} />
-	</label>
-	<button on:click={addToList}>Add</button>
+	<div class="mb-3 row">
+		<label for="ytid" class="col-sm-5 col-form-label">YouTube id</label>
+		<div class="col-sm-4">
+			<input
+				id="ytid"
+				name="ytid"
+				class="form-control"
+				placeholder="dQw4w9WgXcQ"
+				bind:value={newYTid}
+			/>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label for="name" class="col-sm-5 col-form-label">Title</label>
+		<div class="col-sm-4">
+			<input
+				id="name"
+				name="name"
+				class="form-control"
+				bind:value={newName}
+			/>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label for="start" class="col-sm-5 col-form-label">Start sec</label>
+		<div class="col-sm-4">
+			<input
+				id="start"
+				name="start"
+				class="form-control"
+				bind:value={newStart}
+			/>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label for="end" class="col-sm-5 col-form-label">End sec</label>
+		<div class="col-sm-4">
+			<input
+				id="end"
+				name="end"
+				class="form-control"
+				bind:value={newEnd}
+			/>
+		</div>
+	</div>
+	<div class="col auto">
+		<button id="submit" class="btn btn-primary" on:click={addToList}>
+			<i class="bi bi-plus-circle" />
+			Add</button
+		>
+	</div>
 
 	<br />
 	<!-- PlayerList -->
 	{#each playerList as item, index}
 		<h2>{item.name}</h2>
-		{#if item.id !== ""}
-			<div class="wrapper">
-				<div class="window">
+		<div class="wrapper">
+			{#if item.id !== ""}
+			<div class="window">
 					<div class="player">
 						<iframe
 							width="300"
@@ -95,9 +140,15 @@
 						/>
 					</div>
 				</div>
-				<span on:click={() => removeFromList(index)}>❌</span>
+				{/if}
+				<button class="btn btn-danger btn">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<i
+						class="bi bi-x-circle"
+						on:click={() => removeFromList(index)}
+					/>
+				</button>
 			</div>
-		{/if}
 		<br />
 	{/each}
 </main>
@@ -111,26 +162,26 @@
 	}
 
 	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 3em;
-		font-weight: 100;
+		margin-bottom: 1em;
+		color: blue;
 	}
 
 	h2 {
 		text-align: left;
 	}
 
+	label {
+		text-align: right;
+	}
+
+	button {
+		max-height: 45px;
+	}
+
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
 		}
-	}
-
-	input,
-	label {
-		display: flex;
-		flex-direction: column;
 	}
 
 	.wrapper {
@@ -144,7 +195,7 @@
 	.window {
 		position: relative;
 		width: 300px;
-		height: 55px;
+		height: 45px;
 		overflow: hidden;
 	}
 
